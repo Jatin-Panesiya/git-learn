@@ -19,23 +19,20 @@ const CsvReader = () => {
       });
     }
   };
+
   useEffect(() => {
-    const filteredData = jsonData.Courses.map((course) =>
-      course.Chapters.map((chapter) => {
-        OTTID.map((id) => {
-          // console.log(+id === 3064788, "id static");
-          return chapter.Videos.filter((video) => {
-            // console.log(+video.streaming_url === +id);
-            +video.streaming_url == +id;
-          });
-        });
-      })
+    const filteredData = jsonData.Courses.flatMap((course) =>
+      course.Chapters.flatMap((chapter) =>
+        OTTID.flatMap((id) =>
+          chapter.Videos.filter(
+            (video) => Number(video.streaming_url) === Number(id)
+          )
+        )
+      )
     );
 
     setMatchingData(filteredData);
   }, [OTTID]);
-
-  console.log(matchingData, "matchingData");
 
   useEffect(() => {
     setOTTID(
