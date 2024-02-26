@@ -12,9 +12,9 @@ const CsvReader = () => {
       try {
         const flattenedData = matchingData.map(
           ({ course, chapter, video }) => ({
+            ...video,
             ...course,
             ...chapter,
-            ...video,
           })
         );
 
@@ -51,11 +51,12 @@ const CsvReader = () => {
           chapter.Videos.filter(
             (video) => Number(video.streaming_url) === Number(id)
           ).map((matchingVideo) => ({
+            video: matchingVideo,
             course: {
               SKU: course.SKU,
               coursePDF: course.coursePDF,
-              description: course.description,
-              Course_id: course.id,
+              course_description: course.description,
+              course_id: course.id,
               course_small_image: course.images.course_small,
               course_large_image: course.images.course_large,
               theme_small_image: course.images.theme_small,
@@ -63,7 +64,7 @@ const CsvReader = () => {
               intro_description: course.intro_description,
               intro_streaming_url: course.intro_streaming_url,
               module_count: course.module_count,
-              name: course.name,
+              course_name: course.name,
               runtime: course.runtime,
               strapline: course.strapline,
               theme_id: course.theme.theme_id,
@@ -74,11 +75,10 @@ const CsvReader = () => {
               video_count: course.video_count,
             },
             chapter: {
-              id: chapter.id,
-              name: chapter.name,
-              description: chapter.description,
+              chapter_id: chapter.id,
+              chapter_name: chapter.name,
+              chapter_description: chapter.description,
             },
-            video: matchingVideo,
           }))
         )
       )
